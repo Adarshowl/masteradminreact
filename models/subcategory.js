@@ -2,7 +2,11 @@ const mongoose = require('mongoose');
 var uniqueValidator = require('mongoose-unique-validator');
 
 const categorySchema = new mongoose.Schema({
-    category_name: {
+    main_category_id:{
+        type:String,
+        required:true
+    },
+    sub_category_name: {
         type: String,
         required: true,
     },
@@ -14,11 +18,6 @@ const categorySchema = new mongoose.Schema({
         type: String,
         required: true,
         default: 'Active'
-    },
-    userId:{
-        type:String,
-        ref:'users',
-        required:false
     }
 });
 

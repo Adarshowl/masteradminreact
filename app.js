@@ -32,6 +32,7 @@ app.all('*',function(req, res, next) {
 app.use('/api/adminauth', require('./controllers/admin/adminauthcontroller'));
 app.use('/api/admin/profile', require('./controllers/admin/profilecontrollers'));
 app.use('/api/admin/user', require('./controllers/admin/usercontroller'));
+app.use('/api/admin/category', require('./controllers/admin/categorycontroller'));
 // user routes
 app.use('/api/userauth', require('./controllers/user/authcontroller'));
 // error handler
@@ -47,7 +48,7 @@ app.listen(port,()=>{
     console.log(`app is listening on ${port}`)
 })
 
-  module.exports = app;
+module.exports = app;
 
 
   

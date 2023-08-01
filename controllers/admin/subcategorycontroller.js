@@ -23,7 +23,7 @@ const storage = multer.diskStorage({
 
 router.get('/list',verifyToken, async function(req, res, next){
   try{
-        const data = await category.find().populate('userId',{name:1}).sort({"createdAt":-1}).exec();
+        const data = await category.find().sort({"createdAt":-1}).exec();
         return res.status(200).json({ success:'Data found', data:data });
   }catch(err){
     return res.status(500).json({ errors: err });
@@ -36,10 +36,10 @@ router.post('/create',verifyToken,upload.single('image'), body('category_name').
     }
   try{
             const img= req.file.filename;
+            console.log(img)
             const add = new category({
                 'category_name':req.body.category_name,
-                'image':img,
-                'userId':req.decoded.id
+                'image':img
             });
             await add.save()
             return res.status(200).json({ success: 'Category Created'});
