@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var category= require('../../models/category');
+var subcategory= require('../../models/subcategory');
 var verifyToken = require('../../middleware/verifytokenadmin');
 const { body, validationResult } = require('express-validator');
 const fs = require('fs');
@@ -23,65 +24,84 @@ const storage = multer.diskStorage({
 
 router.get('/list',verifyToken, async function(req, res, next){
   try{
-        const data = await category.find().sort({"createdAt":-1}).exec();
+        const data = await subcategory.find().populate('main_category_id',{'category_name':1}).sort({"createdAt":-1}).exec();
         return res.status(200).json({ success:'Data found', data:data });
   }catch(err){
     return res.status(500).json({ errors: err });
   }
 });
-router.post('/create',verifyToken,upload.single('image'), body('category_name').not().isEmpty().withMessage('category_name Required'),  async function(req, res, next){
+router.post('/create',verifyToken,upload.single('image'), 
+body('categoryId').not().isEmpty().withMessage('categoryId Required'),
+  async function(req, res, next){
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
   try{
-            const img= req.file.filename;
-            console.log(img)
-            const add = new category({
-                'category_name':req.body.category_name,
-                'image':img
-            });
+            var getData = await subcategory.findOne({'sub_category_name':req.body.sub_category_name}).exec();
+            if (getData) {
+            return res.status(400).json({ errors: "Sub-Category Name Already Exist " });
+          }
+            let updateData = { 
+              main_category_id:req.body.categoryId,
+              sub_category_name:req.body.sub_category_name,
+           };
+      
+            if (req.file && req.file.filename) {
+                updateData.image = req.file.filename;
+            }
+            const add = new subcategory(updateData);
             await add.save()
-            return res.status(200).json({ success: 'Category Created'});
+            return res.status(200).json({ success: 'Sub Category Created'});
   }catch(err){
     return res.status(500).json({ errors: err });
   }
 });
+
 router.get('/show/:id',verifyToken, async function(req, res, next){
         let dataId= req.params.id;
   try{
-        const data = await category.findOne({'_id':dataId}).exec();
+        const data = await subcategory.findOne({'_id':dataId}).exec();
         return res.status(200).json({ data:data });
   }catch(err){
     return res.status(500).json({ errors: err });
   }
 });
-router.post('/update',verifyToken, upload.single('image'), body('categoryId').not().isEmpty().withMessage('categoryId Required'),body('category_name').not().isEmpty().withMessage('category_name Required'), async function(req, res, next){
+
+router.post('/update',verifyToken, upload.single('image'),
+  async function(req, res, next){
   const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
   try{
-      var getData = await category.findOne({'_id':req.body.categoryId},{_id: 1,banner: 1}).exec();
+      var getData = await subcategory.findOne({'_id':req.body.categoryId}).exec();
       if (!getData) {
-      return res.status(400).json({ errors: "category Didn't Exist " });
+      return res.status(400).json({ errors: "sub category Didn't Exist " });
     }
-    let updateData = { 'category_name': req.body.category_name };
+    let updateData = { 
+      sub_category_name:req.body.sub_category_name,
+   };
+
+    if (req.file && req.file.filename) {
+        updateData.image = req.file.filename;
+    }
 
     if (req.file && req.file.filename) {
       updateData.image = req.file.filename;
     }
-        const data = await category.findByIdAndUpdate(req.body.categoryId,updateData).exec();
+        const data = await subcategory.findByIdAndUpdate(req.body.categoryId,updateData).exec();
         
-        return res.status(200).json({ success:'Category Updated' });
+        return res.status(200).json({ success:'Sub Category Updated' });
   }catch(err){
     return res.status(500).json({ errors: err });
   }
 });
+
 router.get('/statusUpdate/:id',verifyToken, async function(req, res, next){
         let dataId= req.params.id;
   try{
-       const viewDatas= await category.findOne({'_id':dataId}).exec();
+       const viewDatas= await subcategory.findOne({'_id':dataId}).exec();
     if(viewDatas){
       var statusKey= viewDatas.status;
       var newStatusKey='';
@@ -90,7 +110,7 @@ router.get('/statusUpdate/:id',verifyToken, async function(req, res, next){
       }else{
         newStatusKey= 'Active';
       }
-       await category.findOneAndUpdate({'_id':dataId}, {'status':newStatusKey});
+       await subcategory.findOneAndUpdate({'_id':dataId}, {'status':newStatusKey});
     }
     return res.status(200).json({ sucess:"Status Changed" });
   }catch(err){
@@ -98,5 +118,14 @@ router.get('/statusUpdate/:id',verifyToken, async function(req, res, next){
   }
 });
 
+router.get('/subcategoryByCategoryId/:id',verifyToken, async function(req, res, next){
+  let dataId= req.params.id;
+try{
+  const data = await subcategory.find({'main_category_id':dataId}).exec();
+  return res.status(200).json({ data:data });
+}catch(err){
+return res.status(500).json({ errors: err });
+}
+});
 
 module.exports = router;

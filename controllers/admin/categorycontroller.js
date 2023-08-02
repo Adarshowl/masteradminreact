@@ -35,6 +35,11 @@ router.post('/create',verifyToken,upload.single('image'), body('category_name').
       return res.status(400).json({ errors: errors.array() });
     }
   try{
+    
+    var getData = await category.findOne({'category_name':req.body.category_name}).exec();
+      if (getData) {
+      return res.status(400).json({ errors: "Category Name Already Exist " });
+    }
             const img= req.file.filename;
             const add = new category({
                 'category_name':req.body.category_name,
