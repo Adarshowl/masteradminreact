@@ -33,6 +33,7 @@ app.use('/api/adminauth', require('./controllers/admin/adminauthcontroller'));
 app.use('/api/admin/profile', require('./controllers/admin/profilecontrollers'));
 app.use('/api/admin/user', require('./controllers/admin/usercontroller'));
 app.use('/api/admin/category', require('./controllers/admin/categorycontroller'));
+app.use('/api/admin/employee', require('./controllers/admin/employeecontroller'));
 // user routes
 app.use('/api/userauth', require('./controllers/user/authcontroller'));
 // error handler
