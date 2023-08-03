@@ -29,27 +29,33 @@ router.get('/list',verifyToken, async function(req, res, next){
     return res.status(500).json({ errors: err });
   }
 });
-router.post('/create',verifyToken,upload.single('image'), body('category_name').not().isEmpty().withMessage('category_name Required'),  async function(req, res, next){
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
+router.post('/create',verifyToken,upload.single('image'),
+  async function(req, res, next){
+    // const errors = validationResult(req);
+    // if (!errors.isEmpty()) {
+    //   return res.status(400).json({ errors: errors.array() });
+    // }
   try{
     
     var getData = await category.findOne({'category_name':req.body.category_name}).exec();
       if (getData) {
       return res.status(400).json({ errors: "Category Name Already Exist " });
     }
-            const img= req.file.filename;
-            const add = new category({
-                'category_name':req.body.category_name,
-                'image':img,
-                'userId':req.decoded.id
-            });
+    let updateData = { 
+      'category_name': req.body.category_name,
+      'userId':req.decoded.id
+     };
+
+    if (req.file && req.file.filename) {
+      updateData.image = req.file.filename;
+    }
+            
+            const add = new category(updateData);
             await add.save()
             return res.status(200).json({ success: 'Category Created'});
   }catch(err){
     return res.status(500).json({ errors: err });
+    
   }
 });
 router.get('/show/:id',verifyToken, async function(req, res, next){
