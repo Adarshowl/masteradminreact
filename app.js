@@ -35,6 +35,9 @@ app.use('/api/admin/user', require('./controllers/admin/usercontroller'));
 app.use('/api/admin/category', require('./controllers/admin/categorycontroller'));
 app.use('/api/admin/subcategory', require('./controllers/admin/subcategorycontroller'));
 app.use('/api/admin/employee', require('./controllers/admin/employeecontroller'));
+app.use('/api/admin/privacypolicy', require('./controllers/admin/privacypolicycontroller'));
+app.use('/api/admin/contactus', require('./controllers/admin/contactuscontroller'));
+app.use('/api/admin/aboutus', require('./controllers/admin/aboutuscontroller'));
 // user routes
 app.use('/api/userauth', require('./controllers/user/authcontroller'));
 // error handler
