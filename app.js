@@ -39,6 +39,7 @@ app.use('/api/admin/privacypolicy', require('./controllers/admin/privacypolicyco
 app.use('/api/admin/contactus', require('./controllers/admin/contactuscontroller'));
 app.use('/api/admin/aboutus', require('./controllers/admin/aboutuscontroller'));
 app.use('/api/admin/faq', require('./controllers/admin/faqcontroller'));
+app.use('/api/admin/notification', require('./controllers/admin/notificationcontroller'));
 // user routes
 app.use('/api/userauth', require('./controllers/user/authcontroller'));
 // error handler

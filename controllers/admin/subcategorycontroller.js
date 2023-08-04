@@ -47,8 +47,11 @@ body('categoryId').not().isEmpty().withMessage('categoryId Required'),
               sub_category_name:req.body.sub_category_name,
            };
       
-            if (req.file && req.file.filename) {
-                updateData.image = req.file.filename;
+            // if (req.file && req.file.filename) {
+            //     updateData.image = req.file.filename;
+            // }
+            if (req.body.image) {
+              updateData.image = req.body.image;
             }
             const add = new subcategory(updateData);
             await add.save()
@@ -83,13 +86,14 @@ router.post('/update',verifyToken, upload.single('image'),
       sub_category_name:req.body.sub_category_name,
    };
 
-    if (req.file && req.file.filename) {
-        updateData.image = req.file.filename;
+    // if (req.file && req.file.filename) {
+    //     updateData.image = req.file.filename;
+    // }
+    if (req.body.image) {
+      updateData.image = req.body.image;
     }
 
-    if (req.file && req.file.filename) {
-      updateData.image = req.file.filename;
-    }
+    
         const data = await subcategory.findByIdAndUpdate(req.body.categoryId,updateData).exec();
         
         return res.status(200).json({ success:'Sub Category Updated' });

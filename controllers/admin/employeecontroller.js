@@ -23,7 +23,7 @@ const storage = multer.diskStorage({
 
 router.get('/list',verifyToken, async function(req, res, next){
     try{
-            const data = await users.find({"is_admin":0,"is_delete":0}).exec();
+            const data = await users.find({"is_admin":0,"is_delete":0}).sort({"createdAt":-1}).exec();
             return res.status(200).json({ success:'Data found', data:data });
     }catch(err){
         return res.status(500).json({ errors: err });
@@ -49,8 +49,11 @@ verifyToken,
         address:req.body.address
      };
 
-    if (req.file && req.file.filename) {
-        updateData.image = req.file.filename;
+    // if (req.file && req.file.filename) {
+    //     updateData.image = req.file.filename;
+    // }
+    if (req.body.image) {
+        updateData.image = req.body.image;
     }
     const saveUser = new users(updateData)
   
@@ -90,8 +93,11 @@ verifyToken,
         address:req.body.address
      };
 
-    if (req.file && req.file.filename) {
-        updateData.image = req.file.filename;
+    // if (req.file && req.file.filename) {
+    //     updateData.image = req.file.filename;
+    // }
+    if (req.body.image) {
+        updateData.image = req.body.image;
     }
     const data = await users.findByIdAndUpdate(id,updateData);
     

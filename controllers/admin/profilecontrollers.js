@@ -43,17 +43,26 @@ router.get('/getprofile', verifyToken,  async (req, res) => {
 
 
 // admin update profile
-router.post("/updateprofile", verifyToken, upload.single('image'), body('name').not().isEmpty().withMessage('name Required'),body('address').not().isEmpty().withMessage('address Required'), body('phone').not().isEmpty().withMessage('phone Required'), async (req, res, next) => {
+router.post("/updateprofile", verifyToken, upload.single('image'), 
+body('name').not().isEmpty().withMessage('name Required'),
+body('address').not().isEmpty().withMessage('address Required'),
+ body('phone').not().isEmpty().withMessage('phone Required'), async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
 
     try{
-        const profileimg= req.file.filename;
-        console.log(profileimg)
-     const res1=  await users.findByIdAndUpdate(req.decoded.id,{ 'name':req.body.name ,'address':req.body.address,'phone':parseInt(req.body.phone),'image':profileimg }).exec();
-// console.log(res1)
+      let data = {
+        name:req.body.name ,
+        address:req.body.address,
+        phone:parseInt(req.body.phone),
+      }
+      if (req.body.image) {
+        data.image = req.body.image;
+      }
+     
+        const res1=  await users.findByIdAndUpdate(req.decoded.id,data).exec();
         return res.status(200).json({ success: 'Profile Updated' });
     }catch(err){
         return res.status(500).json({ errors: err });

@@ -46,8 +46,11 @@ router.post('/create',verifyToken,upload.single('image'),
       'userId':req.decoded.id
      };
 
-    if (req.file && req.file.filename) {
-      updateData.image = req.file.filename;
+    // if (req.file && req.file.filename) {
+    //   updateData.image = req.file.filename;
+    // }
+    if (req.body.image) {
+      updateData.image = req.body.image;
     }
             
             const add = new category(updateData);
@@ -79,8 +82,11 @@ router.post('/update',verifyToken, upload.single('image'), body('categoryId').no
     }
     let updateData = { 'category_name': req.body.category_name };
 
-    if (req.file && req.file.filename) {
-      updateData.image = req.file.filename;
+    // if (req.file && req.file.filename) {
+    //   updateData.image = req.file.filename;
+    // }
+    if (req.body.image) {
+      updateData.image = req.body.image;
     }
         const data = await category.findByIdAndUpdate(req.body.categoryId,updateData).exec();
         

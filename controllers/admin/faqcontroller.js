@@ -81,7 +81,7 @@ try{
     const data = await faq.findOne({'_id':dataId}).exec();
     return res.status(200).json({ data:data });
 }catch(err){
-return res.status(500).json({ errors: err });
+    return res.status(500).json({ errors: err });
 }
 });
 
