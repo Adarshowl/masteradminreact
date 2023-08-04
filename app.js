@@ -40,8 +40,11 @@ app.use('/api/admin/contactus', require('./controllers/admin/contactuscontroller
 app.use('/api/admin/aboutus', require('./controllers/admin/aboutuscontroller'));
 app.use('/api/admin/faq', require('./controllers/admin/faqcontroller'));
 app.use('/api/admin/notification', require('./controllers/admin/notificationcontroller'));
+app.use('/api/admin/subscription', require('./controllers/admin/subscriptioncontroller'));
+app.use('/api/admin/coupon', require('./controllers/admin/couponcontroller'));
 // user routes
 app.use('/api/userauth', require('./controllers/user/authcontroller'));
+app.use('/api/user/notification', require('./controllers/user/notificationcontroller'));
 // error handler
 app.use(function(err, req, res, next) {
     res.locals.message = err.message;

@@ -171,8 +171,8 @@ router.get('/Admin_Push/list',verifyToken, async function(req, res, next){
 router.get('/Admin_Push/show/:id',verifyToken, async function(req, res, next){
     try{
         var data = await notification.findOneAndUpdate({'_id':req.params.id}, {'admin_read_status':"Read"});
-
-        return res.status(200).json({ success:'Data found', data:data });
+        var newdata = await notification.findOne({'_id':req.params.id});
+        return res.status(200).json({ success:'Data found', data:newdata });
     }catch(err){
         return res.status(500).json({ errors: err });
     }
