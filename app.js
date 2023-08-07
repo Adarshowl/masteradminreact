@@ -42,6 +42,8 @@ app.use('/api/admin/faq', require('./controllers/admin/faqcontroller'));
 app.use('/api/admin/notification', require('./controllers/admin/notificationcontroller'));
 app.use('/api/admin/subscription', require('./controllers/admin/subscriptioncontroller'));
 app.use('/api/admin/coupon', require('./controllers/admin/couponcontroller'));
+app.use('/api/admin/role', require('./controllers/admin/rolecontroller'));
+app.use('/api/admin/rolename', require('./controllers/admin/rolenamecontroller'));
 // user routes
 app.use('/api/userauth', require('./controllers/user/authcontroller'));
 app.use('/api/user/notification', require('./controllers/user/notificationcontroller'));

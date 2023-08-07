@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const { body, validationResult } = require('express-validator');
 var users = require('../../models/users');
+var role = require('../../models/role');
 let verifyToken = require('../../middleware/verifytokenadmin');
 const adminsecretKey='fgjhfgj%4456hjhghj'
 
@@ -17,15 +18,17 @@ router.post("/postlogin", body('email').not().isEmpty().withMessage('email Requi
     username: req.body.email,
     password: req.body.password,
     };
-    const user = await users.findOne({email:userdata.username},{_id: 1,password:1, status:1,name:1}).where({'is_admin':1}).exec();
+    const user = await users.findOne({email:userdata.username}).exec();
     if(!user){
         res.status(500).json({
         message: 'Login Failed, Invalid Email or Invalid Password'
         });
     }else{
-    const match = await bcrypt.compare(userdata.password, user.password);
-    if(match){
+    // const match = await bcrypt.compare(userdata.password, user.password);
+    // if(match){
         if(user.status =='Active'){
+            const roledata =await role.find({role_name:user.role})
+           
             let token = jwt.sign({ id: user._id,name: user.name},adminsecretKey, {
             // algorithm: global.config.algorithm,
             expiresIn: '7d'
@@ -34,18 +37,21 @@ router.post("/postlogin", body('email').not().isEmpty().withMessage('email Requi
             res.status(200).json({
             message: 'Login Successful',
             jwtoken: token,
-            data:user
+            data:user,
+            role:roledata
             });
            }   else {
                 res.status(500).json({
                 message: 'Login Failed, User Blocked'
                 });
         }
-    }else {
-    res.status(500).json({
-    message: 'Login Failed, Invalid Password'
-    });
-    }}
+    // }
+    // else {
+    // res.status(500).json({
+    // message: 'Login Failed, Invalid Password'
+    // });
+    // }
+}
  });
 
 
