@@ -30,6 +30,16 @@ router.get('/list',verifyToken, async function(req, res, next){
     return res.status(500).json({ errors: err });
   }
 });
+
+router.get('/activesubcategory',verifyToken, async function(req, res, next){
+  try{
+        const data = await subcategory.find({status:'Active'}).populate('main_category_id',{'category_name':1}).sort({"createdAt":-1}).exec();
+        return res.status(200).json({ success:'Data found', data:data });
+  }catch(err){
+    return res.status(500).json({ errors: err });
+  }
+});
+
 router.post('/create',verifyToken,upload.single('image'), 
 body('categoryId').not().isEmpty().withMessage('categoryId Required'),
   async function(req, res, next){
