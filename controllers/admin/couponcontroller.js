@@ -115,7 +115,7 @@ if(viewDatas){
   var newStatusKey='';
   if(statusKey == 'Active'){
     newStatusKey= 'Deactive';
-  }else{z
+  }else{
     newStatusKey= 'Active';
   }
    await coupon.findOneAndUpdate({'_id':dataId}, {'status':newStatusKey});

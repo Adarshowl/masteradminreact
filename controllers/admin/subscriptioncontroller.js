@@ -108,4 +108,23 @@ router.get('/remove/:id',verifyToken, async function(req, res, next){
     }
 });
 
+router.get('/statusUpdate/:id',verifyToken, async function(req, res, next){
+  let dataId= req.params.id;
+try{
+ const viewDatas= await subscription.findOne({'_id':dataId}).exec();
+if(viewDatas){
+var statusKey= viewDatas.status;
+var newStatusKey='';
+if(statusKey == 'Active'){
+  newStatusKey= 'Deactive';
+}else{
+  newStatusKey= 'Active';
+}
+ await subscription.findOneAndUpdate({'_id':dataId}, {'status':newStatusKey});
+}
+return res.status(200).json({ sucess:"Status Changed" });
+}catch(err){
+return res.status(500).json({ errors: err });
+}
+});
 module.exports = router;

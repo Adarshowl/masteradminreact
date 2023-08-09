@@ -105,6 +105,7 @@ router.post('/update',verifyToken, upload.single('image'), body('categoryId').no
     return res.status(500).json({ errors: err });
   }
 });
+
 router.get('/statusUpdate/:id',verifyToken, async function(req, res, next){
         let dataId= req.params.id;
   try{
