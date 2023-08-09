@@ -120,7 +120,7 @@ if(viewDatas){
   }
    await coupon.findOneAndUpdate({'_id':dataId}, {'status':newStatusKey});
 }
-return res.status(200).json({ sucess:"Status Changed" });
+return res.status(200).json({ success:"Status Changed" });
 }catch(err){
 return res.status(500).json({ errors: err });
 }
