@@ -29,6 +29,32 @@ router.get('/list',verifyToken, async function(req, res, next){
     return res.status(500).json({ errors: err });
   }
 });
+
+// router.post('/create',verifyToken,
+//    async function(req, res, next){
+//     const errors = validationResult(req);
+//     if (!errors.isEmpty()) {
+//       return res.status(400).json({ errors: errors.array() });
+//     }
+//   try{
+//      var getData = await coupon.findOne({'coupon_code':req.body.coupon_code}).exec();
+//       if (getData) {
+//       return res.status(400).json({ errors: "Coupon Already Exist " });
+//     }
+//             const add = new coupon({
+//                 'coupon_code':req.body.coupon_code,
+//                 'usage_limit':req.body.usage_limit,
+//                 'amount':req.body.amount,
+//                 'currency':req.body.currency,
+//                 'expiry_date':req.body.expiry_date,
+//                 'userId':req.decoded.id
+//             });
+//             await add.save()
+//             return res.status(200).json({ success: 'Coupon created'});
+//   }catch(err){
+//     return res.status(500).json({ errors: err });
+//   }
+// });
 router.post('/create',verifyToken,
    async function(req, res, next){
     const errors = validationResult(req);
@@ -42,10 +68,15 @@ router.post('/create',verifyToken,
     }
             const add = new coupon({
                 'coupon_code':req.body.coupon_code,
-                'usage_limit':req.body.usage_limit,
+                'coupon_image':req.body.coupon_image,
+                'discount_by':req.body.discount_by,
+                'percentage':req.body.percentage,
                 'amount':req.body.amount,
+                'startdate':req.body.startdate,
+                'enddate':req.body.enddate,
+                'minimum_order_amount':req.body.minimum_order_amount,
+                'usage_limit':req.body.usage_limit,
                 'currency':req.body.currency,
-                'expiry_date':req.body.expiry_date,
                 'userId':req.decoded.id
             });
             await add.save()
@@ -67,12 +98,17 @@ router.post('/update',verifyToken, body('couponId').not().isEmpty().withMessage(
       return res.status(400).json({ errors: "Coupon Didn't Exist " });
     }
     let updateData = { 
-        'coupon_code':req.body.coupon_code,
-        'usage_limit':req.body.usage_limit,
-        'amount':req.body.amount,
-        'currency':req.body.currency,
-        'expiry_date':req.body.expiry_date,
-        'userId':req.decoded.id
+      'coupon_code':req.body.coupon_code,
+      'coupon_image':req.body.coupon_image,
+      'discount_by':req.body.discount_by,
+      'percentage':req.body.percentage,
+      'amount':req.body.amount,
+      'startdate':req.body.startdate,
+      'enddate':req.body.enddate,
+      'minimum_order_amount':req.body.minimum_order_amount,
+      'usage_limit':req.body.usage_limit,
+      'currency':req.body.currency,
+      'userId':req.decoded.id
      };
         const data = await coupon.findByIdAndUpdate(req.body.couponId,updateData).exec();
         
