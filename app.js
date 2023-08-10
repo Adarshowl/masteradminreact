@@ -46,6 +46,8 @@ app.use('/api/admin/role', require('./controllers/admin/rolecontroller'));
 app.use('/api/admin/rolename', require('./controllers/admin/rolenamecontroller'));
 app.use('/api/admin/paymentcredential', require('./controllers/admin/paymentcredentialcontroller'));
 app.use('/api/admin/invoice', require('./controllers/admin/invoicecontroller'));
+app.use('/api/admin/paymenthistory', require('./controllers/admin/paymenthistorycontroller'));
+app.use('/api/admin/withdrawal', require('./controllers/admin/withdrawalcontroller'));
 // user routes
 app.use('/api/userauth', require('./controllers/user/authcontroller'));
 app.use('/api/user/notification', require('./controllers/user/notificationcontroller'));
