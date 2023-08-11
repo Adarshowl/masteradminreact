@@ -74,14 +74,14 @@ verifyToken,
         await add.save()
     }
 
-    console.log('product id')
-    console.log(productId)
+    // console.log('product id')
+    // console.log(productId)
     const d = new Date()
     const date = d.toLocaleDateString()
     const currentYear = new Date().getFullYear().toString();
     const randomNum = Math.floor(Math.random() * (999999 - 111111 + 1)) + 111111;
     const invoiceId = '#' + currentYear + '-' + randomNum.toString();
-    const createInvoice = new invoice({
+    let data = {
         invoiceId:invoiceId,
         company_name:req.body.company_name,
         company_email:req.body.company_email,
@@ -94,9 +94,14 @@ verifyToken,
         invoice_date:date,
         payment_type:req.body.payment_type,
         payment_status:req.body.payment_status,
+        currency:req.body.currency,
         productId:productId,
         subtotal:subtotal
-    })
+    }
+    if(req.body.company_logo){
+        data.company_logo = req.body.company_logo
+    }
+    const createInvoice = new invoice(data)
     await createInvoice.save()
     return res.status(200).json({ success: 'Invoice Created'});
     

@@ -6,6 +6,10 @@ const invoiceSchema = new mongoose.Schema({
         type: String,
         required: false,
     },
+    company_logo: {
+        type: String,
+        required: false,
+    },
     company_name: {
         type: String,
         required: false,
@@ -58,6 +62,10 @@ const invoiceSchema = new mongoose.Schema({
     },
     subtotal:{
         type: Number,
+        required: false,
+    },
+    currency:{
+        type: String,
         required: false,
     },
     status: {
