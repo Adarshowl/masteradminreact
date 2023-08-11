@@ -42,23 +42,7 @@ verifyToken,
 
     try{
         console.log(req.body)
-    // let product = [
-    //     {
-    //         product_name:"product 1",
-    //         product_quantity:"2",
-    //         product_price:"11"
-    //     },
-    //     {
-    //         product_name:"product 2",
-    //         product_quantity:"1",
-    //         product_price:"13"
-    //     },
-    //     {
-    //         product_name:"product 3",
-    //         product_quantity:"2",
-    //         product_price:"12"
-    //     }
-    // ]
+
     if (!Array.isArray(req.body.product)) {
         return res.status(400).json({ errors:"product not an Array" });
     }
