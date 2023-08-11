@@ -69,7 +69,7 @@ const invoiceSchema = new mongoose.Schema({
         required: false,
     },
     template:{
-        type: Number,
+        type: String,
         required: false,
     },
     status: {
