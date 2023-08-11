@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var category= require('../../models/category');
 var rolename= require('../../models/rolename');
+var role= require('../../models/role');
 var verifyToken = require('../../middleware/verifytokenadmin');
 const { body, validationResult } = require('express-validator');
 const fs = require('fs');
@@ -51,9 +52,25 @@ router.post('/create',verifyToken,
       'role_name': req.body.role_name,
       'userId':req.decoded.id
      };
-            const add = new rolename(updateData);
-            await add.save()
-            return res.status(200).json({ success: 'Role Created'});
+    const add = new rolename(updateData);
+    await add.save()
+    const getmodule = await role.find({role_name:'All'})
+    console.log('hello')
+    console.log(getmodule) 
+    const moduleArray = getmodule.map((item)=>{
+      return item.module
+    })
+    console.log('i m module') 
+    console.log(moduleArray)
+    for (let i = 0; i < moduleArray.length; i++){
+      const add2 = new role({
+          'role_name':req.body.role_name,
+          'module':moduleArray[i],
+          'userId':req.decoded.id
+      });
+      await add2.save()
+    }
+    return res.status(200).json({ success: 'Role Created'});
   }catch(err){
     return res.status(500).json({ errors: err });
     

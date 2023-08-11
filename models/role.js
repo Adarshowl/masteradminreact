@@ -4,7 +4,7 @@ var uniqueValidator = require('mongoose-unique-validator');
 const roleSchema = new mongoose.Schema({
     role_name: {
         type: String,
-        required: true,
+        required: false,
     },
     module: {
         type: String,
@@ -13,27 +13,27 @@ const roleSchema = new mongoose.Schema({
     create: {
         type: String,
         required: false,
-        default: 'Active'
+        default: 'Deactive'
     },
     read: {
         type: String,
         required: false,
-        default: 'Active'
+        default: 'Deactive'
     },
     update: {
         type: String,
         required: false,
-        default: 'Active'
+        default: 'Deactive'
     },
     delete: {
         type: String,
         required: false,
-        default: 'Active'
+        default: 'Deactive'
     },
     status: {
         type: String,
         required: false,
-        default: 'Active'
+        default: 'Deactive'
     },
     userId:{
         type:String,

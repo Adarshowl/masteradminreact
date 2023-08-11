@@ -95,6 +95,7 @@ verifyToken,
         payment_type:req.body.payment_type,
         payment_status:req.body.payment_status,
         currency:req.body.currency,
+        template:req.body.template,
         productId:productId,
         subtotal:subtotal
     }

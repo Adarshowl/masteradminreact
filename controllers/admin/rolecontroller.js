@@ -31,12 +31,14 @@ router.get('/list',verifyToken, async function(req, res, next){
   }
 });
 
+
+
 router.get('/rolelist',verifyToken, async function(req, res, next){
     try{
 
         const data = await role.find().populate('userId',{name:1}).sort({"createdAt":-1}).exec();
         
-        return res.status(200).json({ success:'Data found', data:newdata });
+        return res.status(200).json({ success:'Data found', data:data });
     }catch(err){
       return res.status(500).json({ errors: err });
     }

@@ -68,6 +68,10 @@ const invoiceSchema = new mongoose.Schema({
         type: String,
         required: false,
     },
+    template:{
+        type: Number,
+        required: false,
+    },
     status: {
         type: String,
         required: true,
