@@ -45,9 +45,9 @@ router.post('/create',verifyToken,
     // }
     var getUserData = await users.findById({'_id':req.decoded.id}).exec();
     const randomNum = Math.floor(Math.random() * (99999999 - 10000000 + 1)) + 10000000;
-    const invoiceId = 'T-' + randomNum.toString();
+    const ticketId = 'T-' + randomNum.toString();
             const add = new ticket({
-                'ticketId':invoiceId,
+                'ticketId':ticketId,
                 'name':getUserData?.name,
                 'subject':req.body.subject,
                 'email':getUserData?.email,
