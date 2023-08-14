@@ -44,9 +44,10 @@ router.post('/create',verifyToken,
     //   return res.status(400).json({ errors: "Subscription Already Exist " });
     // }
     var getUserData = await users.findById({'_id':req.decoded.id}).exec();
-    console.log(getUserData)
+    const randomNum = Math.floor(Math.random() * (99999999 - 10000000 + 1)) + 10000000;
+    const invoiceId = 'T-' + randomNum.toString();
             const add = new ticket({
-                'ticketId':'1234',
+                'ticketId':invoiceId,
                 'name':getUserData?.name,
                 'subject':req.body.subject,
                 'email':getUserData?.email,
