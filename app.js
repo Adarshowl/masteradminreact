@@ -52,6 +52,7 @@ app.use('/api/admin/paymenthistory', require('./controllers/admin/paymenthistory
 app.use('/api/admin/withdrawal', require('./controllers/admin/withdrawalcontroller'));
 app.use('/api/admin/emailconfig', require('./controllers/admin/emailconfigcontroller'));
 app.use('/api/admin/emailtemplate', require('./controllers/admin/emailtemplatecontroller'));
+app.use('/api/admin/ticket', require('./controllers/admin/ticketcontroller'));
 // user routes
 app.use('/api/userauth', require('./controllers/user/authcontroller'));
 app.use('/api/user/notification', require('./controllers/user/notificationcontroller'));
