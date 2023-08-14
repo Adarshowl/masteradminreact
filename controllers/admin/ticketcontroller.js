@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var subscription= require('../../models/subscription');
 var ticket= require('../../models/ticket');
+var ticketreplymessage= require('../../models/ticketreplymessage');
 var users= require('../../models/users');
 var verifyToken = require('../../middleware/verifytokenadmin');
 const { body, validationResult } = require('express-validator');
@@ -32,6 +33,16 @@ router.get('/list',verifyToken, async function(req, res, next){
   }
 });
 
+router.get('/ticketmessagelist/:id',verifyToken, async function(req, res, next){
+    try{
+        let dataId= req.params.id;
+          const data = await ticketreplymessage.find({'ticketId':dataId}).populate('userId',{name:1,image:1}).sort({"createdAt":-1}).exec();
+          return res.status(200).json({ success:'Data found', data:data });
+    }catch(err){
+      return res.status(500).json({ errors: err });
+    }
+  });
+
 router.post('/create',verifyToken,
    async function(req, res, next){
     const errors = validationResult(req);
@@ -39,10 +50,6 @@ router.post('/create',verifyToken,
       return res.status(400).json({ errors: errors.array() });
     }
   try{
-    //  var getData = await subscription.findOne({'title':req.body.title}).exec();
-    //   if (getData) {
-    //   return res.status(400).json({ errors: "Subscription Already Exist " });
-    // }
     var getUserData = await users.findById({'_id':req.decoded.id}).exec();
     const randomNum = Math.floor(Math.random() * (99999999 - 10000000 + 1)) + 10000000;
     const ticketId = 'T-' + randomNum.toString();
@@ -130,5 +137,24 @@ return res.status(200).json({ success:"Status Changed" });
 }catch(err){
 return res.status(500).json({ errors: err });
 }
+});
+
+router.post('/ticket-reply',verifyToken,
+   async function(req, res, next){
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+  try{
+            const add = new ticketreplymessage({
+                'ticketId':req.body.ticketId,
+                'message':req.body.message,
+                'userId':req.decoded.id
+            });
+            await add.save()
+            return res.status(200).json({ success: 'Reply Sent'});
+  }catch(err){
+    return res.status(500).json({ errors: err });
+  }
 });
 module.exports = router;
