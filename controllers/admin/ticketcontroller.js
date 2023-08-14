@@ -36,7 +36,7 @@ router.get('/list',verifyToken, async function(req, res, next){
 router.get('/ticketmessagelist/:id',verifyToken, async function(req, res, next){
     try{
         let dataId= req.params.id;
-          const data = await ticketreplymessage.find({'ticketId':dataId}).populate('userId',{name:1,image:1}).sort({"createdAt":-1}).exec();
+          const data = await ticketreplymessage.find({'ticketId':dataId}).populate('userId',{name:1,image:1}).exec();
           return res.status(200).json({ success:'Data found', data:data });
     }catch(err){
       return res.status(500).json({ errors: err });
