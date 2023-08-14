@@ -54,14 +54,10 @@ router.post('/create',verifyToken,
      };
     const add = new rolename(updateData);
     await add.save()
-    const getmodule = await role.find({role_name:'All'})
-    console.log('hello')
-    console.log(getmodule) 
+    const getmodule = await role.find({role_name:'All'}) 
     const moduleArray = getmodule.map((item)=>{
       return item.module
     })
-    console.log('i m module') 
-    console.log(moduleArray)
     for (let i = 0; i < moduleArray.length; i++){
       const add2 = new role({
           'role_name':req.body.role_name,

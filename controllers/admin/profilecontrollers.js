@@ -8,8 +8,6 @@ const saltRounds = 10;
 const multer = require("multer");
 require('dotenv').config();
 
-// console.log(crypto)
-
 
 
 
@@ -27,7 +25,7 @@ const upload = multer({
   storage,
 });
 
-// console.log(upload)
+
 
 // multer end
 

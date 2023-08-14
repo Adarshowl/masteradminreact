@@ -41,8 +41,7 @@ verifyToken,
     }
 
     try{
-        console.log(req.body)
-
+  
     if (!Array.isArray(req.body.product)) {
         return res.status(400).json({ errors:"product not an Array" });
     }
@@ -58,8 +57,6 @@ verifyToken,
         await add.save()
     }
 
-    // console.log('product id')
-    // console.log(productId)
     const d = new Date()
     const date = d.toLocaleDateString()
     const currentYear = new Date().getFullYear().toString();

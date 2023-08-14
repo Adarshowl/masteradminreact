@@ -13,7 +13,6 @@ router.use(function (req, res, next) {
                        message: err.message,
                        expiredAt: err.expiredAt
                        };
-                       // console.log(errordata);
                        return res.status(500).json({
                        message: 'Unauthorized Access'
                        });

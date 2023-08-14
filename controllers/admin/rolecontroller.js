@@ -82,9 +82,7 @@ router.get('/statusUpdate/:id',verifyToken, async function(req, res, next){
     
     try{
         let dataId= req.params.id;
-    console.log(dataId)
     const viewDatas= await role.findOne({'_id':dataId}).exec();
-    console.log(viewDatas)
         if(viewDatas){
         var statusKey= viewDatas.status;
         var newStatusKey='';
@@ -94,7 +92,6 @@ router.get('/statusUpdate/:id',verifyToken, async function(req, res, next){
                 newStatusKey= 'Active';
             }
             const update = await role.findByIdAndUpdate({'_id':dataId}, {'status':newStatusKey});
-            console.log(update)
         }
         else{
             return res.status(400).json({ errors: "No Data Found" });
@@ -111,9 +108,7 @@ router.get('/createstatusUpdate/:id',verifyToken, async function(req, res, next)
     
     try{
         let dataId= req.params.id;
-    console.log(dataId)
     const viewDatas= await role.findOne({'_id':dataId}).exec();
-    console.log(viewDatas)
         if(viewDatas){
         var statusKey= viewDatas.create;
         var newStatusKey='';
@@ -123,7 +118,7 @@ router.get('/createstatusUpdate/:id',verifyToken, async function(req, res, next)
                 newStatusKey= 'Active';
             }
             const update = await role.findByIdAndUpdate({'_id':dataId}, {'create':newStatusKey});
-            console.log(update)
+           
         }
         else{
             return res.status(400).json({ errors: "No Data Found" });
@@ -140,9 +135,7 @@ router.get('/readstatusUpdate/:id',verifyToken, async function(req, res, next){
     
     try{
         let dataId= req.params.id;
-    console.log(dataId)
     const viewDatas= await role.findOne({'_id':dataId}).exec();
-    console.log(viewDatas)
         if(viewDatas){
         var statusKey= viewDatas.read;
         var newStatusKey='';
@@ -152,7 +145,6 @@ router.get('/readstatusUpdate/:id',verifyToken, async function(req, res, next){
                 newStatusKey= 'Active';
             }
             const update = await role.findByIdAndUpdate({'_id':dataId}, {'read':newStatusKey});
-            console.log(update)
         }
         else{
             return res.status(400).json({ errors: "No Data Found" });
@@ -169,9 +161,7 @@ router.get('/updatestatusUpdate/:id',verifyToken, async function(req, res, next)
     
     try{
         let dataId= req.params.id;
-    console.log(dataId)
     const viewDatas= await role.findOne({'_id':dataId}).exec();
-    console.log(viewDatas)
         if(viewDatas){
         var statusKey= viewDatas.update;
         var newStatusKey='';
@@ -181,7 +171,6 @@ router.get('/updatestatusUpdate/:id',verifyToken, async function(req, res, next)
                 newStatusKey= 'Active';
             }
             const update = await role.findByIdAndUpdate({'_id':dataId}, {'update':newStatusKey});
-            console.log(update)
         }
         else{
             return res.status(400).json({ errors: "No Data Found" });
@@ -198,9 +187,7 @@ router.get('/deletestatusUpdate/:id',verifyToken, async function(req, res, next)
     
     try{
         let dataId= req.params.id;
-    console.log(dataId)
     const viewDatas= await role.findOne({'_id':dataId}).exec();
-    console.log(viewDatas)
         if(viewDatas){
         var statusKey= viewDatas.delete;
         var newStatusKey='';
@@ -210,7 +197,6 @@ router.get('/deletestatusUpdate/:id',verifyToken, async function(req, res, next)
                 newStatusKey= 'Active';
             }
             const update = await role.findByIdAndUpdate({'_id':dataId}, {'delete':newStatusKey});
-            console.log(update)
         }
         else{
             return res.status(400).json({ errors: "No Data Found" });

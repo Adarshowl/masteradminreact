@@ -46,9 +46,8 @@ router.get('/update/:id',verifyToken, async function(req, res, next){
 
 router.get('/delete/:id',verifyToken, async function(req, res, next){
   let dataId= req.params.id
-//   console.log(dataId)
+
   try{
-//   const deleteUser = users.findOneAndUpdate({'_id':dataId}, {'is_delete':1})
 const deleteUser = users.findByIdAndRemove({'_id':dataId})
    .catch(err => {
     return res.status(500).json({ errors: err });

@@ -128,7 +128,6 @@ router.post('/login', body('email').not().isEmpty().withMessage('email Required'
             jwtoken: token,
             data:user
         });
-        // console.log(updateData)
         
      } else {
         res.status(500).json({
